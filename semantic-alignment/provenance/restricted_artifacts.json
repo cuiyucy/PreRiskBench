@@ -1,0 +1,30 @@
+[
+  {
+    "artifact": "vitaldb_mapping",
+    "filename": "vitaldb_final_mapping.csv",
+    "available": true,
+    "sha256": "9ce96b36641370272b1071645b266c2b586f5036e67bbaec70ecacd72fd60a4e",
+    "bytes": 185524
+  },
+  {
+    "artifact": "mover_mapping",
+    "filename": "mover_final_mapping.csv",
+    "available": true,
+    "sha256": "bd44b3e45fc1dc1964c491600d96712838402e5ff539a065e4460fe4be16d0ae",
+    "bytes": 7014008
+  },
+  {
+    "artifact": "inspire_mapping",
+    "filename": "inspire_final_mapping.csv",
+    "available": true,
+    "sha256": "699d239939e56dfa47483411354e42cd833de2f51392b2291a5e5eef232d494a",
+    "bytes": 637952
+  },
+  {
+    "artifact": "cluster_analysis_frequency",
+    "filename": "cid_to_centroid_freq_backup.json",
+    "available": true,
+    "sha256": "744e95a840ede013b0d9cf96838327c21d0b1ebc3ceadee44c85ac3ea582368c",
+    "bytes": 664196
+  }
+]

@@ -1,0 +1,7 @@
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+\makeatletter
+\renewcommand{\fnum@figure}{\figurename\thefigure}
+\makeatother
+\newcommand{\figref}[1]{\mbox{Fig.\ref{#1}}}
+\newcommand{\tabref}[1]{\mbox{Table~\ref{#1}}}

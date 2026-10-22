@@ -1,0 +1,42 @@
+databases:
+  vitaldb:
+    host: ${VITALDB_DB_HOST}
+    port: ${VITALDB_DB_PORT}
+    database: ${VITALDB_DB_NAME}
+    username: ${VITALDB_DB_USER}
+    password: ${VITALDB_DB_PASSWORD}
+  mover:
+    host: ${MOVER_DB_HOST}
+    port: ${MOVER_DB_PORT}
+    database: ${MOVER_DB_NAME}
+    username: ${MOVER_DB_USER}
+    password: ${MOVER_DB_PASSWORD}
+  inspire:
+    host: ${INSPIRE_DB_HOST}
+    port: ${INSPIRE_DB_PORT}
+    database: ${INSPIRE_DB_NAME}
+    username: ${INSPIRE_DB_USER}
+    password: ${INSPIRE_DB_PASSWORD}
+llm:
+  api_key: ${LLM_API_KEY}
+  api_url: ${LLM_API_URL}
+  max_tokens: 8192
+  model: deepseek-v4-flash
+  temperature: 0.1
+  timeout: 180
+  reasoning_effort: high
+  enable_search: true
+rag:
+  enabled: true
+  top_k: 15
+  embedding_dir: ${RAG_INDEX_DIR}
+models:
+  clinical_bert:
+    description: Medical AI ClinicalBERT model for medical text embedding
+    name: ClinicalBERT
+    path: ${CLINICAL_BERT_DIR}
+    type: transformers
+  sentence_transformers:
+    all_minilm_l6_v2:
+      name: sentence-transformers/all-MiniLM-L6-v2
+      path: ${MINILM_MODEL_DIR}

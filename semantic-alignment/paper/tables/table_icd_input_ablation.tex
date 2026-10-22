@@ -1,0 +1,21 @@
+\begin{table*}[!t]
+\caption{Code-versus-description ablation. Bold: improvement over raw codes. Score $\geq0.85$ is an automatic-score fraction, not physician-rated correctness.}
+\label{tab:icd-input-ablation}
+\centering\footnotesize
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{lllrrrrr}
+\toprule
+Subset & Code system & Mapper input & Unique $n$ & Exact (\%) & Retrieval (\%) & Mean score & Score $\geq0.85$ (\%) \\
+\midrule
+All unique inputs & ICD-10-CM & English description & 1,126 & \textbf{38.5} & 61.5 & \textbf{0.9494} & \textbf{93.4} \\
+All unique inputs & ICD-10-CM & Raw code string & 765 & 0.9 & 99.1 & 0.8313 & 22.1 \\
+All unique inputs & ICD-10-PCS & English description & 1,857 & \textbf{0.4} & 99.6 & \textbf{0.8640} & \textbf{69.1} \\
+All unique inputs & ICD-10-PCS & Raw code string & 1,674 & 0.0 & 100.0 & 0.7613 & 0.1 \\
+\midrule
+Matched source-code set & ICD-10-CM & English description & 516 & \textbf{42.2} & 57.8 & \textbf{0.9561} & \textbf{96.1} \\
+Matched source-code set & ICD-10-CM & Raw code string & 518 & 1.2 & 98.8 & 0.8309 & 20.5 \\
+Matched source-code set & ICD-10-PCS & English description & 952 & \textbf{0.2} & 99.8 & \textbf{0.8648} & \textbf{69.8} \\
+Matched source-code set & ICD-10-PCS & Raw code string & 1,054 & 0.0 & 100.0 & 0.7610 & 0.1 \\
+\bottomrule
+\end{tabular}
+\end{table*}

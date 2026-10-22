@@ -1,0 +1,4 @@
+# Keep code portable and preserve the archived manuscript bytes exactly.
+* text=auto eol=lf
+paper/** -text -whitespace
+*.pdf binary

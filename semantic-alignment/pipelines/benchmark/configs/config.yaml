@@ -1,0 +1,160 @@
+project:
+  name: Perioperative Semantic Alignment
+  description: ASA-only publication pipeline
+data:
+  root_dir: dataset
+  datasets:
+  - name: vitaldb
+    path: dataset/vitaldb
+    size: 6388
+    has_med_rec: false
+  - name: mover
+    path: dataset/mover
+    size: 83468
+    has_med_rec: true
+  - name: inspire
+    path: dataset/inspire
+    size: 130000
+    has_med_rec: true
+  feature_types:
+  - feat_pat_demo
+  - feat_anes_vars
+  - feat_surg_vars
+  - feat_test_vars
+  - feat_past_his
+  - feat_med_rec
+  labels:
+    vitaldb:
+      asa: labels_asa.csv
+    mover:
+      asa: labels_asa.csv
+    inspire:
+      asa: labels_asa.csv
+  target_tasks:
+  - asa
+experiments:
+  baseline:
+    name: 单数据集训练
+    description: 每个数据集单独训练，使用全部原始字段
+    feature_method: raw_features
+    train_mode: single_dataset
+  exp1:
+    name: 未对齐联合训练
+    description: 三数据集合并，仅字段名匹配的共有字段
+    feature_method: literal_match
+    train_mode: joint_training
+  exp2:
+    name: SNOMED对齐+独热编码
+    description: 基于SNOMED映射表提取统一语义特征，使用独热编码
+    feature_method: snomed_onehot
+    train_mode: joint_training
+  exp3:
+    name: 未对齐模型迁移
+    description: INSPIRE→VitalDB迁移，仅字段名匹配特征
+    feature_method: literal_match
+    train_mode: transfer_learning
+    source_dataset: inspire
+    target_dataset: vitaldb
+  exp4:
+    name: SNOMED对齐后模型迁移
+    description: INSPIRE→VitalDB迁移，基于SNOMED完整语义特征
+    feature_method: snomed_aligned
+    train_mode: transfer_learning
+    source_dataset: inspire
+    target_dataset: vitaldb
+  exp5:
+    name: BERT隐式对齐联合训练
+    description: 字段名经ClinicalBERT嵌入的联合训练
+    feature_method: bert_embedding
+    train_mode: joint_training
+  exp6:
+    name: SNOMED+BERT嵌入
+    description: 标准术语名→ClinicalBERT嵌入的联合训练
+    feature_method: snomed_bert
+    train_mode: joint_training
+model:
+  algorithms:
+  - lr
+  - rf
+  - xgboost
+  - mlp
+  - cnn
+  - tabtransformer
+  hyperparameters:
+    lr:
+      C:
+      - 0.01
+      - 0.1
+      - 1.0
+      - 10.0
+      max_iter: 1000
+      class_weight: balanced
+    rf:
+      n_estimators:
+      - 100
+      - 200
+      - 300
+      max_depth:
+      - 10
+      - 20
+      - 30
+      class_weight: balanced
+    xgboost:
+      n_estimators:
+      - 100
+      - 200
+      - 300
+      max_depth:
+      - 3
+      - 5
+      - 7
+      learning_rate:
+      - 0.01
+      - 0.05
+      - 0.1
+    mlp:
+      hidden_dims:
+      - 256
+      - 128
+      - 64
+      dropout: 0.3
+      lr: 0.001
+      batch_size: 128
+      max_epochs: 200
+      patience: 30
+    cnn:
+      dropout: 0.3
+      lr: 0.001
+      batch_size: 256
+      max_epochs: 200
+      patience: 30
+    tabtransformer:
+      d_model: 128
+      n_heads: 4
+      n_layers: 3
+      dropout: 0.2
+      lr: 0.001
+      batch_size: 256
+      max_epochs: 200
+      patience: 30
+training:
+  test_size: 0.2
+  validation_size: 0.1
+  random_state: 42
+  cross_validation_folds: 5
+evaluation:
+  metrics:
+  - auroc
+  - auprc
+  - f1_score
+  - accuracy
+  - precision
+  - recall
+  save_results: true
+  results_dir: results
+paths:
+  data_dir: dataset
+  output_dir: outputs
+  log_dir: logs
+  checkpoint_dir: checkpoints
+  config_dir: configs

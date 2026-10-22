@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "Please cite the associated paper when using this code."
+type: software
+title: "Semantic Alignment of Heterogeneous Perioperative Data Resources for Computational Intelligence"
+date-released: 2026-10-22
+repository-code: "https://github.com/cuiyucy/PreRiskBench"
+url: "https://github.com/cuiyucy/PreRiskBench/tree/main/semantic-alignment"
+authors:
+  - given-names: Penghao
+    family-names: Shi
+  - given-names: Yu
+    family-names: Cui
+  - given-names: Yuxuan
+    family-names: Guo
+  - given-names: Kanxue
+    family-names: Li
+  - given-names: Da
+    family-names: Zhu
+  - given-names: Shuo
+    family-names: Dang
+  - given-names: Zhiyi
+    family-names: Yang
+  - given-names: Jiarui
+    family-names: Wu
+  - given-names: Yongcheng
+    family-names: Jing
+  - given-names: Yibing
+    family-names: Zhan
+  - given-names: Hua
+    family-names: Jin
+  - given-names: Baodi
+    family-names: Liu
+  - given-names: Dapeng
+    family-names: Tao
+  - given-names: Weifeng
+    family-names: Liu
+abstract: >-
+  Code and documentation supporting semantic alignment and ASA benchmark
+  evaluation across heterogeneous perioperative data resources. Source data and
+  restricted terminology-derived artifacts are not redistributed.

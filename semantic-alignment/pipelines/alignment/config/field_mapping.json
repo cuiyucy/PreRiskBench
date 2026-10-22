@@ -1,0 +1,49 @@
+{
+  "field_type_mapping": {
+    "prerisk_bench.feat_surg_vars.preop_diagnosis": "disease",
+    "prerisk_bench.feat_past_his.hx_circ_details": "disease",
+    "prerisk_bench.feat_past_his.hx_endo_details": "disease",
+    "data_process.diagnosis_icd10_cm_desc.desc_en": "disease",
+    "data_process.diagnosis_icd10_pcs_desc.desc_en": "disease",
+    "data_process.process_cohort_diag_preop.dx_name_preop": "disease",
+    "data_process.process_cohort_past_his_diag.dx_name": "disease",
+    "data_process.process_cohort_past_his_surg.hx_surgery_detail": "disease",
+    "data_process.process_cohort_medications_preop_non_ans.drug_name": "medication",
+    "data_process.process_cohort_med_adm_preop_non_ans.medication_nm": "medication",
+    "data_process.process_cohort_medications_preop_non_ans.route": "procedure",
+    "data_process.process_cohort_med_adm_preop_non_ans.med_route_nm": "procedure",
+    "prerisk_bench.feat_anes_vars.scheduled_anesthesia_type": "procedure",
+    "prerisk_bench.feat_surg_vars.scheduled_operative_type": "procedure",
+    "prerisk_bench.feat_surg_vars.scheduled_procedure_name": "procedure",
+    "prerisk_bench.feat_surg_vars.scheduled_surgical_approach": "procedure",
+    "prerisk_bench.feat_surg_vars.scheduled_surgical_position": "procedure",
+    "prerisk_bench.feat_anes_vars.surg_admission_chars": "procedure",
+    "prerisk_bench.feat_surg_vars.surgical_department": "procedure",
+    "data_process.process_cohort_department.full_name": "procedure",
+    "data_process.process_cohort_diag_preop.primary_procedure_nm": "procedure"
+  },
+  "snomed_type_mapping": {
+    "disorder": "disease",
+    "finding": "disease",
+    "morphologic abnormality": "disease",
+    "clinical drug": "medication",
+    "substance": "medication",
+    "medicinal product": "medication",
+    "product": "medication",
+    "procedure": "procedure",
+    "qualifier value": "procedure",
+    "situation": "procedure"
+  },
+  "target_snomed_types": [
+    "disorder",
+    "finding",
+    "morphologic abnormality",
+    "clinical drug",
+    "substance",
+    "medicinal product",
+    "product",
+    "procedure",
+    "qualifier value",
+    "situation"
+  ]
+}

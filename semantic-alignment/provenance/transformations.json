@@ -1,0 +1,335 @@
+[
+  {
+    "file": "pipelines/benchmark/main.py",
+    "transformations": [
+      "asa-only-entrypoint"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/data/__init__.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/data/build_benchmark.py",
+    "transformations": [
+      "patient-map-required-no-surgery-fallback"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/data/build_clustered_benchmark.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/data/dataset.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/data/preprocessor.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/data/rebuild_all.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/data/sampler.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/features/__init__.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/features/bert_embedder.py",
+    "transformations": [
+      "private-path-or-endpoint-removed"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/features/feature_engineer.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/features/feature_processor.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/models/__init__.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/models/base_models.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/models/graph_builder.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/models/neural_models.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/utils/__init__.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/utils/export_all_metrics.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/utils/metrics.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/experiments/__init__.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/experiments/run_ablation_k.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/experiments/run_experiments.py",
+    "transformations": [
+      "recursive-yaml-environment-expansion"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/__init__.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/clustering_pipeline.py",
+    "transformations": [
+      "private-path-or-endpoint-removed"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/clustering_pipeline.py",
+    "transformations": [
+      "retained-paper-frequency-first-representative-policy"
+    ],
+    "evidence": "frozen paper dictionary hash and recorded frequency-first method"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/build_clustered_vocab.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/compute_cohort_stats.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/compute_overlap_js.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/compute_target_prior_baseline.py",
+    "transformations": [
+      "private-path-or-endpoint-removed"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/run_cross_transfer.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/run_knn_retrieval.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/run_kmeans_for_ablation.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/prior_correction_transfer.py",
+    "transformations": [
+      "private-path-or-endpoint-removed"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/exp02_dimension_compression.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/exp03_semantic_consistency.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/src/analysis/exp04_concept_distribution.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/scripts/analysis_A_mapping_quality.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/scripts/analysis_C_mutual_info.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/scripts/analysis_D_cluster_coherence.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/scripts/build_aligned_dual_benchmark.py",
+    "transformations": [
+      "asa-only-entrypoint"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/benchmark/scripts/benchmark_stats.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/rawdata_process/inspire_uniq_values.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/rawdata_process/mover_uniq_values.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/rawdata_process/snomed_allconcepts_processor.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/rawdata_process/snomed_trunks_processor.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/rawdata_process/snomed_type_n_attributes.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/rawdata_process/vitaldb_uniq_values.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/1.string_mapper.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/2.0snomed_embedding.py",
+    "transformations": [
+      "recursive-yaml-environment-expansion"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/2.1vector_retrieval_mapper.py",
+    "transformations": [
+      "recursive-yaml-environment-expansion"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/3.0extract_special_fields.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/3.1.llm_Mapping_processor.py",
+    "transformations": [
+      "private-path-or-endpoint-removed",
+      "recursive-yaml-environment-expansion"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/3.2.fsn_corrector.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/4.merg_final_mapping.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/__init__.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/hybrid_mapper_allconcepts.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/merge_all_mappings_fixed.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/snomed_mapping/merge_corrected_files.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/utils/uniq_values.py",
+    "transformations": [
+      "recursive-yaml-environment-expansion"
+    ],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "pipelines/alignment/src/experiments/icd_code_mapping_ablation.py",
+    "transformations": [],
+    "format": "AST-normalized; original source hash retained"
+  },
+  {
+    "file": "configs/alignment.example.yaml",
+    "transformations": [
+      "sanitized-current-config-not-a-frozen-run-lock"
+    ]
+  }
+]

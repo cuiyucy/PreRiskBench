@@ -1,0 +1,32 @@
+\begin{table*}[!t]
+\caption{Retrieval-label agreement among non-zero queries. Acc., accuracy; fair acc., class-support-normalized accuracy; MF1, Macro-F1.}
+\label{tab:knn-metrics-full}
+\centering\footnotesize
+\setlength{\tabcolsep}{1.8pt}
+\begin{tabular}{llrrrrrrrrr}
+\toprule
+& & \multicolumn{3}{c}{$k=1$} & \multicolumn{3}{c}{$k=3$} & \multicolumn{3}{c}{$k=5$}\\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}\cmidrule(lr){9-11}
+Representation & Direction & Acc. & Fair acc. & MF1 & Acc. & Fair acc. & MF1 & Acc. & Fair acc. & MF1 \\
+\midrule
+Field-Aligned & INSPIRE $\rightarrow$ MOVER & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Field-Aligned & INSPIRE $\rightarrow$ VitalDB & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Field-Aligned & MOVER $\rightarrow$ INSPIRE & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Field-Aligned & MOVER $\rightarrow$ VitalDB & 0.2415 & 0.2435 & 0.1546 & 0.2605 & 0.2627 & 0.1630 & 0.2472 & 0.2492 & 0.1537 \\
+Field-Aligned & VitalDB $\rightarrow$ INSPIRE & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Field-Aligned & VitalDB $\rightarrow$ MOVER & 0.3950 & 0.3950 & 0.1751 & 0.3801 & 0.3801 & 0.1774 & 0.4137 & 0.4137 & 0.1949 \\
+Concept-Aligned & INSPIRE $\rightarrow$ MOVER & 0.2602 & 0.2602 & 0.1762 & 0.2084 & 0.2084 & 0.1456 & 0.2144 & 0.2144 & 0.1452 \\
+Concept-Aligned & INSPIRE $\rightarrow$ VitalDB & 0.2619 & 0.2641 & 0.1603 & 0.2955 & 0.2980 & 0.1772 & 0.2910 & 0.2935 & 0.1746 \\
+Concept-Aligned & MOVER $\rightarrow$ INSPIRE & 0.2314 & 0.2314 & 0.1572 & 0.2281 & 0.2281 & 0.1494 & 0.2180 & 0.2180 & 0.1430 \\
+Concept-Aligned & MOVER $\rightarrow$ VitalDB & 0.2508 & 0.2529 & 0.1572 & 0.2857 & 0.2880 & 0.1697 & 0.2763 & 0.2786 & 0.1633 \\
+Concept-Aligned & VitalDB $\rightarrow$ INSPIRE & 0.2571 & 0.2571 & 0.1641 & 0.2398 & 0.2398 & 0.1509 & 0.2261 & 0.2261 & 0.1504 \\
+Concept-Aligned & VitalDB $\rightarrow$ MOVER & 0.3292 & 0.3292 & 0.1634 & 0.2360 & 0.2360 & 0.1434 & 0.2870 & 0.2870 & 0.1574 \\
+Concept-Clustered & INSPIRE $\rightarrow$ MOVER & 0.2554 & 0.2554 & 0.1684 & 0.2469 & 0.2469 & 0.1598 & 0.2221 & 0.2221 & 0.1339 \\
+Concept-Clustered & INSPIRE $\rightarrow$ VitalDB & 0.3247 & 0.3275 & 0.1849 & 0.3437 & 0.3467 & 0.1899 & 0.3685 & 0.3716 & 0.1834 \\
+Concept-Clustered & MOVER $\rightarrow$ INSPIRE & 0.2776 & 0.2776 & 0.1688 & 0.2630 & 0.2630 & 0.1601 & 0.2557 & 0.2557 & 0.1481 \\
+Concept-Clustered & MOVER $\rightarrow$ VitalDB & 0.2792 & 0.2815 & 0.1684 & 0.2901 & 0.2925 & 0.1642 & 0.3015 & 0.3039 & 0.1652 \\
+Concept-Clustered & VitalDB $\rightarrow$ INSPIRE & 0.2559 & 0.2559 & 0.1545 & 0.2671 & 0.2671 & 0.1719 & 0.2932 & 0.2932 & 0.1721 \\
+Concept-Clustered & VitalDB $\rightarrow$ MOVER & 0.2870 & 0.2870 & 0.1518 & 0.2571 & 0.2571 & 0.1385 & 0.2410 & 0.2410 & 0.1470 \\
+\bottomrule
+\end{tabular}
+\end{table*}

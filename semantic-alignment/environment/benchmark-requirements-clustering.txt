@@ -1,0 +1,17 @@
+# 语义聚类环境锁文件（S-Cluster 构建 / requirements-clustering.txt）
+# ----------------------------------------------------------------
+# 用途：重建可复现的 SNOMED 语义聚类环境（22,218 概念 → 7,279 簇）。
+# 说明：聚类产物（cid_to_centroid.json 等）已生成并随发布；本文件用于
+#      重建与产物一致的聚类运行环境。当前实验环境未安装独立 hdbscan 包，
+#      实际运行聚类时的 hdbscan 版本未留存；此处锁定与 scikit-learn 1.7
+#      兼容的发布版本 hdbscan==0.8.44，并以哈希校验重建结果。
+# 注意：torch 版本与 CUDA 相关，可按部署平台调整（+cu124 对应 CUDA 12.4）。
+
+numpy==2.2.6
+pandas==2.3.3
+scikit-learn==1.7.2
+scipy==1.15.3
+hdbscan==0.8.44
+transformers==5.12.1
+sentence-transformers==5.6.0
+torch==2.6.0+cu124

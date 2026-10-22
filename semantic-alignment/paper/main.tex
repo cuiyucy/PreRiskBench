@@ -1,0 +1,202 @@
+\documentclass[a4paper,conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{newtxtext,newtxmath}
+\IfFileExists{local-fonts/times.ttf}{
+  \newfontfamily\NTCIReferenceFont[Path=local-fonts/,Extension=.ttf,
+    UprightFont=times,BoldFont=timesbd,ItalicFont=timesi,BoldItalicFont=timesbi]{times}
+}{
+  \newfontfamily\NTCIReferenceFont{Times New Roman}
+}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{url}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{multicol}
+
+\geometry{a4paper,left=2cm,right=2cm,top=2.5cm,bottom=4cm}
+
+\newcommand{\fieldaligned}{Field-Aligned}
+\newcommand{\conceptaligned}{Concept-Aligned}
+\newcommand{\conceptclustered}{Concept-Clustered}
+\newcommand{\fieldname}[1]{{\normalfont #1}}
+\input{caption_style.tex}
+\input{author_info.tex}
+
+\begin{document}
+
+\title{Semantic Alignment of Heterogeneous Perioperative Data Resources for Computational Intelligence}
+
+\author{
+\IEEEauthorblockN{\parbox[t]{\textwidth}{\centering\paperauthors}}
+\IEEEauthorblockA{\parbox[t]{\textwidth}{\centering\paperaffiliations}}
+\IEEEauthorblockA{\papercorrespondence}
+}
+
+\maketitle
+
+\begin{abstract}
+Public perioperative resources cannot be pooled directly because their schemas and clinical values differ. We built a three-resource benchmark that first derives common preoperative fields and then maps 13 text fields to the Systematized Nomenclature of Medicine---Clinical Terms (SNOMED CT). Preprocessing produced 72,807 surgeries, a 58,553-record information-complete cohort, and a patient-grouped American Society of Anesthesiologists (ASA) physical status classification task with 28,397 records. Mapping generated 47,270 records covering 22,218 concepts. Concept alignment raised pairwise Jaccard overlap from 0.00--0.40\% to 2.40--3.82\% and increased the three-resource intersection from 2 source terms to 64 standardized concepts. In joint experiments using a clinical Bidirectional Encoder Representations from Transformers model (\mbox{ClinicalBERT}), mean Macro-F1 increased across six classifiers by 0.8--5.1\% relative to field alignment. Exploratory clustering reduced the concept space to 7,279 groups and raised overlap to 9.16--13.66\%, but rarely improved joint prediction beyond concept alignment. Field harmonization enabled joint computation; concept alignment added shared semantic support.
+\end{abstract}
+
+\vspace{\baselineskip}
+
+\begin{IEEEkeywords}
+\textit{perioperative data; semantic alignment; SNOMED CT; clinical benchmark; computational intelligence}
+\end{IEEEkeywords}
+
+\section{Introduction}
+VitalDB, the Medical Informatics Operating Room Vitals and Events Repository (MOVER), and the Informative Surgical Patient dataset for Innovative Research Environment (INSPIRE) support perioperative risk research but differ in population, workflow, schema, and documentation~\cite{vitaldb,mover,inspire}. Our metadata-only audit found 3.51--7.32\% pairwise exact column-name overlap and incompatible keys, diagnoses, and clinical values, precluding direct concatenation.
+
+Frameworks support intensive-care integration~\cite{ricu,yaib} and longitudinal evaluation~\cite{ehrshot}. Common data models and ontologies support schema conversion~\cite{ohdsi,snomed,umls}, and perioperative work mapped VitalDB, MOVER, and INSPIRE to the Observational Medical Outcomes Partnership Common Data Model (\mbox{OMOP-CDM}) with language-model assistance~\cite{kim_omop_perioperative}. Terminology normalization uses pairwise or neural ranking~\cite{dnorm,bert_normalization,n2c2}, domain-adapted encoders~\cite{clinicalbert}, retrieval-augmented generation (RAG)~\cite{rag}, and large language model (LLM) resolution~\cite{llm_snomed}. Incremental benefits of concept normalization and granularity reduction under a common patient-grouped perioperative protocol remain unclear.
+
+We compare \fieldaligned{}, auditable Systematized Nomenclature of Medicine---Clinical Terms (\mbox{SNOMED CT}) \conceptaligned{}, and exploratory \conceptclustered{} representations using overlap, retrieval support, and patient-grouped American Society of Anesthesiologists (ASA) physical status prediction. We include independently sampled mapping review and licensed-data reconstruction boundaries, distinguishing computational interoperability from clinical validity.
+
+\section{Benchmark Construction}
+\subsection{Resources, Cohorts, and Patient-Level Splits}
+Analysis-start cohorts contained 6,118 VitalDB, 21,990 MOVER, and 44,699 INSPIRE surgeries, after upstream exclusion of identified VitalDB--INSPIRE duplicate cases. A common filter required sex, age, height, weight, diagnosis, procedure, and either an organ-system history or five laboratory measurements, retaining 58,553 records. Extraction used VitalDB \fieldname{cases}, multiple MOVER \fieldname{epic\_emr} tables, and INSPIRE \fieldname{operations} and \fieldname{diagnosis} (\figref{fig:field-alignment}). Long-form laboratory normalization and pivoting produced 27 variables; diagnosis, procedure, medication, and history formed 13 text fields.
+
+\onecolumn
+\raggedbottom
+\setlength{\multicolsep}{8pt}
+\begin{multicols}{2}
+\noindent Source keys were assigned to \fieldname{patient\_id} and \fieldname{surgery\_id}; residual identifiers and the resource indicator were excluded from predictors. Upstream processing removed 1,275 VitalDB-overlapping INSPIRE cases using \fieldname{case\_id} 1--6388. Laboratory events were selected preoperatively, cleaned, normalized by test name and unit, aggregated, and pivoted.
+
+Seed-42 patient-grouped stratification retained 4,028 VitalDB, 12,236 MOVER, and 12,133 INSPIRE records (\tabref{tab:cohort-flow-full}). VitalDB lost 93 unlabeled records; MOVER and INSPIRE also had task-size caps, with label and sampling losses inseparable in available logs. All frozen splits had zero patient overlap. VitalDB contains ASA I--IV and the others I--V. VitalDB and INSPIRE share one hospital, limiting independent-site interpretation.
+\end{multicols}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/fig01_field_alignment.pdf}
+\caption{Field harmonization workflow. Resource-specific tables are linked by de-identified keys, laboratories are normalized into 27 variables, and clinical records are organized into 13 text fields. The common interface contains patient and surgery identifiers, structured inputs, text fields, and ASA labels; no identifier values or clinical records are shown.}
+\label{fig:field-alignment}
+\end{figure}
+\begin{table}[H]
+\caption{Cohort flow and final patient-grouped ASA splits.}
+\label{tab:cohort-flow-full}
+\centering\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Resource & Analysis start & Complete & ASA task & Train & Validation & Test \\
+\midrule
+VitalDB & 6,118 & 4,121 & 4,028 & 2,417 & 806 & 805 \\
+MOVER & 21,990 & 17,129 & 12,236 & 7,308 & 2,460 & 2,468 \\
+INSPIRE & 44,699 & 37,303 & 12,133 & 7,271 & 2,395 & 2,467 \\
+Total & 72,807 & 58,553 & 28,397 & 16,996 & 5,661 & 5,740 \\
+\bottomrule
+\end{tabular}
+\end{table}\begin{multicols}{2}
+\subsection{SNOMED CT Alignment}
+We standardized unique values from preoperative diagnosis, planned procedure, ten organ-system histories, and medication history against active descriptions in the 2026-02-01 SNOMED CT International Release. Exact strings scored 1.0. A frozen clinical Bidirectional Encoder Representations from Transformers model (\mbox{ClinicalBERT}; \fieldname{medicalai/ClinicalBERT}, 768 dimensions) and a Facebook AI Similarity Search (FAISS) index~\cite{faiss} retrieved 50 candidates. Vector similarity and bidirectional keyword coverage were weighted 0.8 and 0.2; listed negators zeroed keyword coverage, leaving $0.8\,\mathrm{sim}_{vec}$.
+
+A hosted LLM received ambiguous terms with 15 candidates~\cite{rag}. This path used deepseek-v4-flash, temperature 0.1, high reasoning, and an 8,192-token limit; scores below 0.3 were rejected. Outputs retained identifier, name, mapping path, and automatic path-specific score (\figref{fig:overview}).
+
+Resolving INSPIRE codes to English descriptions raised the fraction scoring $\geq0.85$ from 22.1\% to 93.4\% for the International Classification of Diseases, Tenth Revision, Clinical Modification (\mbox{ICD-10-CM}), and from 0.1\% to 69.1\% for the International Classification of Diseases, Tenth Revision, Procedure Coding System (\mbox{ICD-10-PCS}). \tabref{tab:icd-input-ablation} reports the full input ablation under the same mapper. All inputs received candidates; raw codes produced high-scoring lexical collisions. Representation-specific deduplication changed input counts, precluding paired comparison. Automatic scores are neither physician correctness estimates nor an official crosswalk.
+
+The pipeline produced 47,270 mapping records. One physician reviewed a seed-42 sample of 30 records per resource--score stratum, except VitalDB's two low-score records (242 total). High meant exact match or score $\geq0.95$, middle $0.85\leq\mathrm{score}<0.95$, and low $<0.85$. Exact or broadly acceptable mappings totaled 170/242 (70.2\%, Wilson 95\% confidence interval (CI) 64.2--75.7\%). Weighting nine strata by population counts yielded 87.2\% acceptable (approximate 95\%~CI 80.6--93.7\%). Review did not change mappings; one reviewer and small low-score strata limit this estimate.
+\end{multicols}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig02_benchmark_overview.pdf}
+\caption{Illustrative mapping and clustering workflow. Codes are resolved to English descriptions. LLM, large language model; RAG, retrieval-augmented generation; CMS-HCC, Centers for Medicare \& Medicaid Services Hierarchical Condition Category.}
+\label{fig:overview}
+\end{figure}
+\begingroup
+\renewenvironment{table*}[1][]{\begin{table}[H]}{\end{table}}
+\input{tables/table_icd_input_ablation.tex}
+\endgroup
+\begin{multicols}{2}
+\subsection{Granularity Reduction}
+The 22,218 concepts were normalized using \fieldname{d4data/biomedical-ner-all}, SNOMED CT synonyms, and normalization rules, then \mbox{ClinicalBERT}-embedded and stratified by semantic type. Strata with $n>1{,}000$ used mini-batch k-means~\cite{minibatch_kmeans}: $k=\max(2,\min(\lfloor n/3\rfloor,5000))$, seed 42, three initializations, and 300 iterations. Smaller strata used Hierarchical Density-Based Spatial Clustering of Applications with Noise (\mbox{HDBSCAN})~\cite{hdbscan}, version 0.8.44, with minimum cluster size 5 and Euclidean distance. Pharmaceutical products used exact normalized strings. The most frequent member concepts named 7,279 clusters.
+
+\end{multicols}
+\clearpage
+\begin{multicols}{2}
+A size-weighted audit judged 20/30 sampled multi-member clusters consistent (66.7\%, Wilson 95\%~CI 48.8--80.8\%). Entropy-weighted identity retention was $\sum I(C;K)/\sum H(C)=91.8\%$ across ten positive-entropy resource--field combinations, where $C$ is concept identity, $K$ its cluster, $H$ entropy, and $I$ mutual information. This measures encoding, not clinical validity.
+
+\subsection{Evaluation Inputs}
+Joint ASA models used 768-dimensional \mbox{ClinicalBERT} text encodings and available structured variables. Categorical encoders and top-500-per-field one-hot vocabularies were fit on training data. \mbox{ClinicalBERT} used padding-masked mean pooling and averaged multi-valued fields. Numeric missingness was zero-filled without standardization. Mapping and clustering used full unlabeled vocabularies before splitting, making the representation comparison transductive.
+
+\section{Evaluation Results}
+\subsection{Shared Concept Space}
+Within each surgery, text values were merged and deduplicated. Pairwise Jaccard overlap increased from \mbox{0.00--0.40\%} after field alignment to \mbox{2.40--3.82\%} after concept alignment and \mbox{9.16--13.66\%} after clustering (\figref{fig:concept}). The three-resource intersection contained 2 source terms, 64 concepts, and 167 clusters, whereas Jensen--Shannon divergence remained 0.530--0.761 after clustering.
+\end{multicols}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.97\textwidth]{figures/fig03_concept_space_tradeoff.pdf}
+\caption{Pairwise concept overlap and residual distribution divergence. Jaccard overlap increases after concept alignment and clustering (a), whereas Jensen--Shannon divergence remains substantial (b).}
+\label{fig:concept}
+\end{figure}
+\begin{multicols}{2}
+\raggedcolumns
+\subsection{Cross-Resource Retrieval}
+Each resource's test split queried another resource's training split by cosine similarity over one-hot diagnosis, procedure, and history features. Zero-hit rate denotes queries with no shared feature. The four \fieldaligned{} directions involving INSPIRE had no shared feature, whereas both concept representations created support in all six directions (\figref{fig:retrieval}). Under \conceptclustered{}, zero-hit rates remained direction-dependent at 1.5--60.0\%.
+
+\tabref{tab:knn-metrics-full} includes only non-zero queries, so representations evaluate different subsets. Accuracy and Macro-F1 (the unweighted mean of class-wise F1 scores) are auxiliary label-agreement measures. Fair accuracy divides accuracy by $1-r$, where $r$ is the fraction of queries with labels absent from the reference label space. Here $k$ is the number of neighbors; a dash denotes no eligible queries. Tied-vote handling was unidentified.
+
+Coverage and label agreement thus characterize different aspects of cross-resource retrieval. Conditional scores exclude zero-hit queries, so they should be interpreted alongside the coverage rates.
+
+\columnbreak
+\subsection{ASA Model Readiness}
+We evaluated logistic regression (LR)~\cite{cox_logistic}, random forests (RF)~\cite{breiman_rf}, extreme gradient boosting (\mbox{XGBoost})~\cite{xgboost}, multilayer perceptrons (MLP)~\cite{backprop}, one-dimensional convolutional neural networks (\mbox{1D-CNN})~\cite{lecun_cnn}, and TabTransformer~\cite{tabtransformer} over seeds 1--5 without task-specific tuning. \conceptaligned{} increased mean Macro-F1 by 0.0033--0.0209 (0.8--5.1\% relative) over \fieldaligned{} across all six classifiers (\figref{fig:model-readiness}). \conceptclustered{} exceeded \fieldaligned{} throughout but exceeded \conceptaligned{} only for LR. These small differences were not tested for statistical significance. \tabref{tab:joint-all} includes all six models and both encodings.
+
+With one-hot inputs, concept alignment improved mean Macro-F1 only for RF and \mbox{1D-CNN} relative to field alignment. Clustering improved five of the six classifiers, with LR as the exception. Thus, the advantage of concept alignment across all six classifiers with \mbox{ClinicalBERT} did not extend uniformly to one-hot inputs. \mbox{ClinicalBERT} yielded higher mean Macro-F1 than one-hot inputs for every matched model--representation pair.
+\end{multicols}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{figures/fig04_retrieval_coverage.pdf}
+\caption{Six-direction retrieval coverage. Panel a reports zero-hit rates and shared-feature counts; panel b links the three representations within each query-to-reference direction. Concept alignment creates support in all directions, but coverage remains resource- and direction-dependent.}
+\label{fig:retrieval}
+\end{figure}
+\begingroup
+\renewenvironment{table*}[1][]{\begin{table}[H]}{\end{table}}
+\input{tables/table_knn_metrics.tex}
+\endgroup
+\begingroup
+\renewenvironment{table*}[1][]{\begin{table}[H]}{\end{table}}
+\renewcommand{\arraystretch}{1.10}
+\input{tables/table_joint_all.tex}
+\endgroup
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{figures/fig05_asa_model_readiness.pdf}
+\caption{\mbox{ClinicalBERT} ASA results: five-seed mean Macro-F1 $\pm$ standard deviation (SD) (a), and change from \fieldaligned{} (b). LR, logistic regression; RF, random forest; MLP, multilayer perceptron; \mbox{1D-CNN}, one-dimensional convolutional neural network.}
+\label{fig:model-readiness}
+\end{figure}
+
+\begin{multicols}{2}
+\section{Discussion}
+Field alignment enabled a common interface; concept alignment increased shared semantic support and produced small Macro-F1 gains in joint ClinicalBERT training; clustering increased overlap without uniform predictive gains.
+
+These results establish computational interoperability, not clinical similarity. Resource distributions and directional zero-hit rates remained distinct. Although upstream preprocessing excluded identified duplicate cases, VitalDB and INSPIRE originate from the same hospital and do not provide independent-site validation. Raw diagnosis and procedure codes also produced lexical rather than semantic matches. Accordingly, \conceptaligned{} preserves auditable SNOMED CT identities, whereas \conceptclustered{} trades identity for coverage; the 91.8\% entropy-weighted concept-identity retention and 66.7\% cluster audit are not independent clinical validation.
+
+Limitations include one mapping reviewer, 30 reviewed clusters, resource-specific preprocessing, and incomplete rerun reproducibility of the hosted language-model stage. Restricted frozen mappings permit downstream checks, but external reconstruction from released code and licensed sources may not reproduce identical mappings or results. Future work should add multiple reviewers, text-isolating ablations, and independent institutions.
+
+\section{Reproducibility, Ethics, and Availability}
+We analyzed released, de-identified data. Source approvals were VitalDB (H-1408-101-605), MOVER (2021-6488), and INSPIRE (H-2210-078-1368; BD-R-2022-11-02)~\cite{vitaldb,mover,inspire}. INSPIRE access required Collaborative Institutional Training Initiative (CITI) training and PhysioNet approval; no additional ethics approval was required.
+
+Authorized users must acquire source data and SNOMED CT locally. Planned public artifacts comprise reconstruction/analysis code, task definitions, split logic, sanitized prompts/configurations, environment locks, aggregate evidence, and snapshot hashes. Source records, patient-level features/predictions/split maps, term-level mappings, clusters, and licensed ontology assets are excluded. Frozen mappings permit restricted downstream replay; raw hosted-model responses were not retained, and rerunning that stage or public reconstruction need not reproduce identical outputs.
+
+\section{Conclusion}
+Concept alignment increased shared support and slightly improved joint ClinicalBERT Macro-F1; clustering improved coverage without uniform predictive gains. Resource differences, limited audits, and absent independent external validation constrain these findings.
+
+\section*{Acknowledgment}
+This work is supported by the Yunnan Provincial Key Science and Technology Project (Grant No. 202502AS080002); the Yunling Scholar Talent Program of Yunnan Province (Grant No. K264202230207); Shandong Natural Science Foundation (ZR2024MF102); Fundamental Research Funds for the Central Universities, China University of Petroleum (East China) (26CX02005A); Qingdao Key Laboratory of Intelligent Sensing Technology for Extreme Environment (2025YB001); Key Projects of the Qingdao Natural Science Foundation (25-3-1-3-zyyd-jch); Major Basic Research Projects in Shandong Province (ZR2023ZD32); Open Project of Yunnan Key Laboratory of Media Convergence (ynmckey220252201); and Zhejiang Province Leading Earth Goose Program (2025C01129).
+
+\end{multicols}
+\clearpage
+\begin{multicols}{2}
+\begingroup
+\footnotesize
+\NTCIReferenceFont
+\input{references_ntci.tex}
+\endgroup
+\end{multicols}
+
+\end{document}
